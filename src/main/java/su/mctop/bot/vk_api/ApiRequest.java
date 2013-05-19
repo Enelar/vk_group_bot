@@ -25,7 +25,8 @@ import su.mctop.bot.WallMessage;
  * @author Enelar
  */
 public class ApiRequest extends VKRequest {
-    public ApiRequest( ) {
+    public ApiRequest( Integer app_id, String scope ) {
+        super(app_id, scope);
     }
 
     public WallMessage[] GetWall(String group, int offset, int count, String filter) {

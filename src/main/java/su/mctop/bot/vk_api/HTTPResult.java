@@ -7,6 +7,7 @@ package su.mctop.bot.vk_api;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.lang.ref.SoftReference;
 import java.net.HttpURLConnection;
 
 /**
@@ -35,7 +36,12 @@ public class HTTPResult {
         }
         rd.close();
         finished = true;
+        c = null;
         return Result();
+    }
+    
+    public SoftReference<HttpURLConnection> RawConnection() {
+        return new SoftReference<HttpURLConnection>(c);
     }
             
 }
