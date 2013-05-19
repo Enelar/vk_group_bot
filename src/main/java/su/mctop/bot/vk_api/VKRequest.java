@@ -2,9 +2,10 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package su.mctop.bot;
+package su.mctop.bot.vk_api;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -20,33 +21,24 @@ import org.json.simple.parser.ParseException;
  * @author Enelar
  */
 public class VKRequest {
-    private String getHTML(String urlToRead) {
-        URL url;
-        HttpURLConnection conn;
-        BufferedReader rd;
-        String line;
-        String result = "";
-        try {
-            url = new URL(urlToRead);
-            conn = (HttpURLConnection) url.openConnection();
-            conn.setRequestMethod("GET");
-            rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-            while ((line = rd.readLine()) != null) {
-                result += line;
-            }
-            rd.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return result;
+    private HTTPRequest req;
+    
+    public VKRequest() {
+        
     }
+    private HTTPResult getHTML(String urlToRead) throws IOException {
+        if (req == null)
+            req = new HTTPRequest();
+        return req.Get(urlToRead);
+    }
+    
     private static final String base_url = "https://api.vk.com/method/";
     
-    protected String Request(String method, Map<String, String> arguments) {
+    protected HTTPResult Request(String method, Map<String, String> arguments) throws IOException {
         return Request(method, arguments, null);
     }
 
-    protected String Request(String method, Map<String, String> arguments, String token) {
+    protected HTTPResult Request(String method, Map<String, String> arguments, String token) throws IOException {
         String t = base_url + method + "?";
         if (token != null) {
             arguments.put("access_token", token);
@@ -54,12 +46,16 @@ public class VKRequest {
         for (Map.Entry<String, String> entry : arguments.entrySet()) {
             t += entry.getKey() + "=" + entry.getValue() + "&";
         }
-        String ret = getHTML(t);
-        return ret;
+        return getHTML(t);
     }
     
     protected JSONObject RequestAndParse(String method, Map<String, String> arguments, String token) {
-        String t = Request(method, arguments, token);
+        String t;
+        try {
+            t = Request(method, arguments, token).Result();
+        } catch (IOException e) {
+          return null;
+        }
         JSONObject jsonObject = null;
         try {
             jsonObject = (JSONObject) new JSONParser().parse(t);

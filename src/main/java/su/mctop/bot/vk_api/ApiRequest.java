@@ -1,6 +1,8 @@
-package su.mctop.bot;
+package su.mctop.bot.vk_api;
 
+import su.mctop.bot.vk_api.VKRequest;
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -12,6 +14,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import su.mctop.bot.WallMessage;
 
 /*
  * To change this template, choose Tools | Templates
@@ -52,13 +55,18 @@ public class ApiRequest extends VKRequest {
     }
 
     public Boolean DeleteWallMessage(int owner, int id, String access) {
+     
         Map<String, String> m = new HashMap<String, String>();
         m.put("owner_id", String.valueOf(owner));
         m.put("post_id", String.valueOf(id));
-        String ret = Request("wall.delete", m, access);
-        if (ret.contains("{\"response\":1}")) {
+        
+        try {
+          String ret = Request("wall.delete", m, access).Result();
+          if (ret.contains("{\"response\":1}"))
             return true;
-        }
+        } catch (IOException e) {
+          
+        }           
         System.out.print("F");
         return false;
     }
@@ -80,6 +88,10 @@ public class ApiRequest extends VKRequest {
         m.put("reason", "1"); //spam
         m.put("comment", "Wall%20Cleaner%20Bot");
         m.put("comment_visible", "1");
-        Request("groups.banUser", m, access);
+        try {
+          Request("groups.banUser", m, access);
+        } catch (IOException e) {
+          Logger.getLogger(ApiRequest.class.getName()).log(Level.SEVERE, null, e);  
+        }
     }
 }
