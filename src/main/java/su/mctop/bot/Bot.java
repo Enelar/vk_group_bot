@@ -1,4 +1,4 @@
-package ru.mctop.bot;
+package su.mctop.bot;
 
 import java.util.ArrayList;
 import java.util.HashMap;
