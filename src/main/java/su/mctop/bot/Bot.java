@@ -1,4 +1,4 @@
-package ru.mctop.bot;
+package su.mctop.bot;
 
 /**
  * Hello world!
