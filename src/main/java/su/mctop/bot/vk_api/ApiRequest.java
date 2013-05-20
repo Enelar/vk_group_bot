@@ -72,12 +72,6 @@ public class ApiRequest extends VKRequest {
         return false;
     }
 
-    public String MakeAuth() {
-        String ret = "LALALA";
-        String url = "https://oauth.vk.com/authorize?client_id=3571081&scope=wall,groups&redirect_uri=https://oauth.vk.com/blank.html&display=popup&response_type=token";
-        return ret;
-    }
-
     public void Ban(int gid, int id, String access) {
         int Current = (int) (System.currentTimeMillis() / 1000L);
         Current += 3600;
