@@ -35,6 +35,7 @@ public class HTTPResult {
             result += line;
         }
         rd.close();
+        ResultString = result;
         finished = true;
         c = null;
         return Result();
