@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package su.mctop.bot.vk_api;
 
 import java.io.BufferedReader;
@@ -18,31 +14,32 @@ public class HTTPResult {
     private HttpURLConnection c;
     private Boolean finished;
     private String ResultString;
-    
-    protected HTTPResult( HttpURLConnection _c ) {
+
+    protected HTTPResult(HttpURLConnection _c) {
         finished = false;
         c = _c;
     }
-    
+
     public String Result() throws IOException {
         if (finished)
             return ResultString;
+
         BufferedReader rd = new BufferedReader(new InputStreamReader(c.getInputStream()));
         String line;
-        String result = "";        
-            
+        StringBuilder result = new StringBuilder();
         while ((line = rd.readLine()) != null) {
-            result += line;
+            result.append(line);
         }
         rd.close();
-        ResultString = result;
-        finished = true;
+        
         c = null;
-        return Result();
+        finished = true;
+        ResultString = result.toString();
+        result.delete(0, result.length());
+        return ResultString;
     }
-    
+
     public SoftReference<HttpURLConnection> RawConnection() {
         return new SoftReference<HttpURLConnection>(c);
     }
-            
 }
