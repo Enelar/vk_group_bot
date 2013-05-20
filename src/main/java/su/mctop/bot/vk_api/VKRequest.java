@@ -26,63 +26,12 @@ import org.json.simple.parser.ParseException;
  */
 public class VKRequest {
     private HTTPRequest req;
-    private String token;
-    private String user;
+    private VKToken token;
     
-    public VKRequest( Integer app_id, String scope ) {
-        MakeAuth(app_id, scope);
+    public VKRequest( VKToken t ) {
+      token = t;
     }
-    
-    private void MakeAuth( Integer client_id, List<String> scope ) {
-        MakeAuth(client_id, scope, "https://oauth.vk.com/blank.html");
-    }
-    
-    private void MakeAuth( Integer client_id, String scope ) {    
-      MakeAuth(client_id, scope, "https://oauth.vk.com/blank.html");
-    }
-    
-    private void MakeAuth( Integer client_id, List<String> scope, String redirect ) {
-        String res = "";
-        Iterator<String> i = scope.iterator();
         
-        while (i.hasNext()) {
-            String t = i.next();
-            res += t + ",";
-        }
-        MakeAuth(client_id, res, redirect);
-    }
-    
-    private void MakeAuth( Integer client_id, String scope, String redirect ) {
-        String url = 
-                auth_url + 
-                "?client_id=" + client_id.toString() +
-                "&scope=" + scope +
-                "&redirect_url=" + redirect + 
-                "&display=popup&response_type=token";
-        HttpURLConnection c = null;
-        try {
-          SoftReference<HttpURLConnection> r = getHTML(url).RawConnection();
-          c = r.get();
-        } catch (IOException e) {}
-        if (c == null)
-            return;
-        String location = c.getHeaderField("Location");
-        ExtractToken(location);
-    }
-    
-    private void ExtractToken( String url ) {
-        String[] parts = url.split("#");
-        String[] params = parts[1].split("&");
-        
-        Map<String, String> map = new HashMap<String, String>();  
-        for (String param : params) {
-            String[] t = param.split("=");
-            map.put(t[0], t[1]);
-        }
-        token = map.get("access_token");
-        user = map.get("user_id");
-    }
-    
     private HTTPResult getHTML(String urlToRead) throws IOException {
         if (req == null)
             req = new HTTPRequest();
@@ -96,10 +45,10 @@ public class VKRequest {
         return Request(method, arguments, null);
     }
 
-    protected HTTPResult Request(String method, Map<String, String> arguments, String token) throws IOException {
+    protected HTTPResult Request(String method, Map<String, String> arguments ) throws IOException {
         String t = base_url + method + "?";
         if (token != null) {
-            arguments.put("access_token", token);
+            arguments.put("access_token", token.Token());
         }
         for (Map.Entry<String, String> entry : arguments.entrySet()) {
             t += entry.getKey() + "=" + entry.getValue() + "&";
@@ -107,10 +56,10 @@ public class VKRequest {
         return getHTML(t);
     }
     
-    protected JSONObject RequestAndParse(String method, Map<String, String> arguments, String token) {
+    protected JSONObject RequestAndParse(String method, Map<String, String> arguments ) {
         String t;
         try {
-            t = Request(method, arguments, token).Result();
+            t = Request(method, arguments, token.Token()).Result();
         } catch (IOException e) {
           return null;
         }
