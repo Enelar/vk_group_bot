@@ -49,7 +49,9 @@ public class VKToken {
    
   
    private List<String> DefaultTokens() {
-       List<String> ret = default_tokens.get();
+       List<String> ret = null;
+       if (default_tokens != null)
+           ret = default_tokens.get();
        if (ret != null)
            return ret;
        ret = new ArrayList<String>();
@@ -75,8 +77,12 @@ public class VKToken {
        return UserId().toString();
    }
    
+   private Boolean IsLoaded() {
+       return token != null;
+   }
+   
    private void GetToken() {
-       if (Token() != null)
+       if (IsLoaded())
            return;
       
        String scope = GenScope();
