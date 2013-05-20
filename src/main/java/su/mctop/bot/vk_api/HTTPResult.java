@@ -15,7 +15,7 @@ public class HTTPResult {
     private Boolean finished;
     private String ResultString;
 
-    protected HTTPResult(HttpURLConnection _c) {
+    protected HTTPResult( HttpURLConnection _c ) {
         finished = false;
         c = _c;
     }
@@ -31,7 +31,7 @@ public class HTTPResult {
             result.append(line);
         }
         rd.close();
-        
+
         c = null;
         finished = true;
         ResultString = result.toString();

@@ -1,35 +1,24 @@
 package su.mctop.bot.vk_api;
 
-import su.mctop.bot.vk_api.VKRequest;
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.Map;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 import su.mctop.bot.WallMessage;
 
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 /**
  *
  * @author Enelar
  */
 public class ApiRequest extends VKRequest {
-    public ApiRequest( Integer app_id, String scope ) {     
+    public ApiRequest( Integer app_id, String scope ) {
         super(new VKToken(app_id));
     }
 
-    public WallMessage[] GetWall(String group, int offset, int count, String filter) {
+    public WallMessage[] GetWall( String group, int offset, int count, String filter ) {
         Map<String, String> m = new HashMap<String, String>();
         m.put("domain", group);
         m.put("offset", String.valueOf(offset));
@@ -55,24 +44,24 @@ public class ApiRequest extends VKRequest {
         return ret;
     }
 
-    public Boolean DeleteWallMessage(int owner, int id) {
-     
+    public Boolean DeleteWallMessage( int owner, int id ) {
+
         Map<String, String> m = new HashMap<String, String>();
         m.put("owner_id", String.valueOf(owner));
         m.put("post_id", String.valueOf(id));
-        
+
         try {
-          String ret = Request("wall.delete", m).Result();
-          if (ret.contains("{\"response\":1}"))
-            return true;
+            String ret = Request("wall.delete", m).Result();
+            if (ret.contains("{\"response\":1}"))
+                return true;
         } catch (IOException e) {
-          
-        }           
+            /* do nothing */
+        }
         System.out.print("F");
         return false;
     }
 
-    public void Ban(int gid, int id, String access) {
+    public void Ban( int gid, int id, String access ) {
         int Current = (int) (System.currentTimeMillis() / 1000L);
         Current += 3600;
 
@@ -84,9 +73,9 @@ public class ApiRequest extends VKRequest {
         m.put("comment", "Wall%20Cleaner%20Bot");
         m.put("comment_visible", "1");
         try {
-          Request("groups.banUser", m);
+            Request("groups.banUser", m);
         } catch (IOException e) {
-          Logger.getLogger(ApiRequest.class.getName()).log(Level.SEVERE, null, e);  
+            Logger.getLogger(ApiRequest.class.getName()).log(Level.SEVERE, null, e);
         }
     }
 }
