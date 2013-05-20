@@ -41,15 +41,9 @@ public class VKRequest {
     private static final String base_url = "https://api.vk.com/method/";
     private static final String auth_url = "https://oauth.vk.com/authorize";
     
-    protected HTTPResult Request(String method, Map<String, String> arguments) throws IOException {
-        return Request(method, arguments, null);
-    }
-
     protected HTTPResult Request(String method, Map<String, String> arguments ) throws IOException {
         String t = base_url + method + "?";
-        if (token != null) {
-            arguments.put("access_token", token.Token());
-        }
+        arguments.put("access_token", token.Token());
         for (Map.Entry<String, String> entry : arguments.entrySet()) {
             t += entry.getKey() + "=" + entry.getValue() + "&";
         }
@@ -59,7 +53,7 @@ public class VKRequest {
     protected JSONObject RequestAndParse(String method, Map<String, String> arguments ) {
         String t;
         try {
-            t = Request(method, arguments, token.Token()).Result();
+            t = Request(method, arguments).Result();
         } catch (IOException e) {
           return null;
         }

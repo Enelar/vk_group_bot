@@ -25,8 +25,8 @@ import su.mctop.bot.WallMessage;
  * @author Enelar
  */
 public class ApiRequest extends VKRequest {
-    public ApiRequest( Integer app_id, String scope ) {
-        super(app_id, scope);
+    public ApiRequest( Integer app_id, String scope ) {     
+        super(new VKToken(app_id));
     }
 
     public WallMessage[] GetWall(String group, int offset, int count, String filter) {
@@ -37,7 +37,7 @@ public class ApiRequest extends VKRequest {
         m.put("filter", filter);
         m.put("extended", "0");
 
-        JSONObject obj = RequestAndParse("wall.get", m, null);
+        JSONObject obj = RequestAndParse("wall.get", m);
         JSONArray a = (JSONArray) obj.get("response");
         WallMessage[] ret = new WallMessage[count];
         for (int i = 1; i < a.size(); ++i) {
@@ -55,14 +55,14 @@ public class ApiRequest extends VKRequest {
         return ret;
     }
 
-    public Boolean DeleteWallMessage(int owner, int id, String access) {
+    public Boolean DeleteWallMessage(int owner, int id) {
      
         Map<String, String> m = new HashMap<String, String>();
         m.put("owner_id", String.valueOf(owner));
         m.put("post_id", String.valueOf(id));
         
         try {
-          String ret = Request("wall.delete", m, access).Result();
+          String ret = Request("wall.delete", m).Result();
           if (ret.contains("{\"response\":1}"))
             return true;
         } catch (IOException e) {
@@ -90,7 +90,7 @@ public class ApiRequest extends VKRequest {
         m.put("comment", "Wall%20Cleaner%20Bot");
         m.put("comment_visible", "1");
         try {
-          Request("groups.banUser", m, access);
+          Request("groups.banUser", m);
         } catch (IOException e) {
           Logger.getLogger(ApiRequest.class.getName()).log(Level.SEVERE, null, e);  
         }

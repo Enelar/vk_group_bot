@@ -4,9 +4,15 @@
  */
 package su.mctop.bot.vk_api;
 
+import java.awt.Desktop;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.lang.ref.SoftReference;
 import java.net.HttpURLConnection;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -103,16 +109,27 @@ public class VKToken {
                 "&scope=" + scope +
                 "&redirect_url=" + redirect + 
                 "&display=popup&response_type=token";
-        HttpURLConnection c = null;
         try {
-          HTTPRequest req = new HTTPRequest();
-          SoftReference<HttpURLConnection> r = req.Get(url).RawConnection();
-          c = r.get();
-        } catch (IOException e) {}
-        if (c == null)
-            return;
-        String location = c.getHeaderField("Location");
-        ExtractToken(location);
+            String location = RecieveLocation(url);
+            ExtractToken(location);
+        } catch (URISyntaxException e) {
+            System.out.print("URISyntaxException " + e.toString());
+        } catch (IOException e) {
+            System.out.print("IOException " + e.toString());
+        }
+            
+    }
+    
+    private String RecieveLocation( String url ) throws URISyntaxException, IOException
+    {
+        if (Desktop.isDesktopSupported()) 
+          Desktop.getDesktop().browse(new URI(url));
+        else
+          System.out.print("URL to token: " + url + "\n");
+        System.out.print("Please intert redirect url here: ");
+        InputStreamReader isr = new InputStreamReader(System.in);
+        BufferedReader br = new BufferedReader(isr);
+        return br.readLine();
     }
     
     private void ExtractToken( String url ) {
