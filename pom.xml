@@ -2,13 +2,13 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>su.mctop</groupId>
+    <groupId>im.mctop</groupId>
     <artifactId>vk_group_bot</artifactId>
     <version>1.0</version>
     <packaging>jar</packaging>
 
     <name>vk_group_bot</name>
-    <url>http://mctop.su</url>
+    <url>http://mctop.im</url>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
