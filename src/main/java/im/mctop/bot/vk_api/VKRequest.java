@@ -1,4 +1,4 @@
-package su.mctop.bot.vk_api;
+package im.mctop.bot.vk_api;
 
 import java.io.IOException;
 import java.util.Map;

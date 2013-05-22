@@ -1,4 +1,4 @@
-package su.mctop.bot;
+package im.mctop.bot;
 
 import java.util.ArrayList;
 import java.util.List;

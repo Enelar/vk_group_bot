@@ -1,4 +1,4 @@
-package su.mctop.bot.vk_api;
+package im.mctop.bot.vk_api;
 
 import java.io.IOException;
 import java.util.Map;
@@ -7,7 +7,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import su.mctop.bot.WallMessage;
+import im.mctop.bot.WallMessage;
 
 /**
  *

@@ -1,11 +1,10 @@
-package su.mctop.bot;
+package im.mctop.bot;
 
 import java.util.List;
-import su.mctop.bot.vk_api.ApiRequest;
+import im.mctop.bot.vk_api.ApiRequest;
 
 /**
  * Hello world!
- *
  */
 public class Bot {
     public static void main( String[] args ) {

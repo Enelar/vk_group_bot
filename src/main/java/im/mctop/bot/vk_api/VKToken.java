@@ -1,4 +1,4 @@
-package su.mctop.bot.vk_api;
+package im.mctop.bot.vk_api;
 
 import java.awt.Desktop;
 import java.io.BufferedReader;
