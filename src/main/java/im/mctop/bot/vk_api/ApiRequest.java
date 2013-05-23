@@ -20,7 +20,7 @@ public class ApiRequest extends VKRequest {
 
     public WallMessage[] GetWall( String group, int offset, int count, String filter ) {
         Map<String, String> m = new HashMap<String, String>();
-        m.put("domain", group);
+        m.put("domain", "-" + group);
         m.put("offset", String.valueOf(offset));
         m.put("count", String.valueOf(count));
         m.put("filter", filter);
