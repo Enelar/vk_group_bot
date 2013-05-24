@@ -31,7 +31,7 @@ public class VKToken {
     }
 
     public VKToken( Integer client_id ) {
-        requested_tokens = new ArrayList<String>();
+        requested_tokens = new ArrayList<>();
         appid = client_id;
         SetToken(null, "0");
     }
@@ -50,11 +50,11 @@ public class VKToken {
         if (ret != null)
             return ret;
         
-        ret = new ArrayList<String>();
+        ret = new ArrayList<>();
         ret.add("wall");
         ret.add("groups");
         ret.add("offline");
-        default_tokens = new SoftReference<List<String>>(ret);
+        default_tokens = new SoftReference<>(ret);
         return ret;
     }
 
@@ -136,7 +136,7 @@ public class VKToken {
         String[] parts = url.split("#");
         String[] params = parts[1].split("&");
 
-        Map<String, String> map = new HashMap<String, String>();
+        Map<String, String> map = new HashMap<>();
         for (String param : params) {
             String[] t = param.split("=");
             map.put(t[0], t[1]);

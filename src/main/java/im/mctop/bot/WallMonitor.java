@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package im.mctop.bot;
 
 import im.mctop.bot.vk_api.ApiRequest;
@@ -14,11 +10,10 @@ import java.util.List;
  * @author enelar
  */
 public class WallMonitor {
-    private List<WallMessage> messages;
+    private List<WallMessage> messages = new ArrayList<>();
     private String group;
     
     public WallMonitor( String _group ) {
-        messages = new ArrayList<WallMessage>();
         group = _group;
     }
     

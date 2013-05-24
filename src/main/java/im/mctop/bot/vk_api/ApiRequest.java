@@ -19,7 +19,7 @@ public class ApiRequest extends VKRequest {
     }
 
     public WallMessage[] GetWall( String group, int offset, int count, String filter ) {
-        Map<String, String> m = new HashMap<String, String>();
+        Map<String, String> m = new HashMap<>();
         m.put("domain", "-" + group);
         m.put("offset", String.valueOf(offset));
         m.put("count", String.valueOf(count));
@@ -46,7 +46,7 @@ public class ApiRequest extends VKRequest {
 
     public Boolean DeleteWallMessage( int owner, int id ) {
 
-        Map<String, String> m = new HashMap<String, String>();
+        Map<String, String> m = new HashMap<>();
         m.put("owner_id", String.valueOf(owner));
         m.put("post_id", String.valueOf(id));
 
@@ -65,7 +65,7 @@ public class ApiRequest extends VKRequest {
         int Current = (int) (System.currentTimeMillis() / 1000L);
         Current += 3600;
 
-        Map<String, String> m = new HashMap<String, String>();
+        Map<String, String> m = new HashMap<>();
         m.put("gid", String.valueOf(gid));
         m.put("uid", String.valueOf(id));
         m.put("end_date", String.valueOf(Current));
