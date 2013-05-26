@@ -9,4 +9,5 @@ public class WallMessage {
     public int author;
     public int id;
     public int owner;
+    public int date;
 }

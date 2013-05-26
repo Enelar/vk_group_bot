@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Date;
+import java.util.Map;
 
 /**
  *
@@ -35,5 +36,16 @@ public class HTTPRequest {
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("GET");
         return new HTTPResult(conn);
+    }
+    
+    public HTTPResult Post( String urlToRead, Map<String, String> data ) throws IOException {
+        URL url = new URL(urlToRead);
+        GetLock();
+        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+        conn.setRequestMethod("POST");
+        return new HTTPResult(conn);
+    }
+    public void UseCookie( String cookie ) {
+        //todo
     }
 }
