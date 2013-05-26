@@ -1,2 +1,5 @@
 # Maven
 /target
+
+# NetBeans
+/nb-configuration.xml
