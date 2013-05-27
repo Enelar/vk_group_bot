@@ -42,8 +42,11 @@ public class DataObject {
     public String toString() {
         StringBuilder data = new StringBuilder();
         data.append("DataObject [");
+        int i = 0;
         for (Map.Entry<String, Object> entry : m.entrySet()) {
             data.append(entry.getKey()).append("=").append(entry.getValue().toString());
+            if (++i < m.size())
+                data.append(", ");
         }
         data.append("]");
         return data.toString();
